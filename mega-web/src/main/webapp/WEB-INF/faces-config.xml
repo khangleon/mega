@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+	<managed-bean>
+		<managed-bean-name>paramPage</managed-bean-name>
+		<managed-bean-class>java.util.HashMap</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>loginInfo</managed-bean-name>
+		<managed-bean-class>org.mega.dto.core.LoginInfo</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>logindto</managed-bean-name>
+		<managed-bean-class>org.mega.dto.core.LoginDto</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>messagedto</managed-bean-name>
+		<managed-bean-class>org.mega.dto.core.MessageDto</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>menudto</managed-bean-name>
+		<managed-bean-class>org.mega.dto.core.MenuDto</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>pagedto</managed-bean-name>
+		<managed-bean-class>org.mega.dto.core.PageDto</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>adm010dto</managed-bean-name>
+		<managed-bean-class>org.mega.dto.adm.ADM010Dto</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>adm011dto</managed-bean-name>
+		<managed-bean-class>org.mega.dto.adm.ADM011Dto</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>adm012dto</managed-bean-name>
+		<managed-bean-class>org.mega.dto.adm.ADM012Dto</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>wrk010dto</managed-bean-name>
+		<managed-bean-class>org.mega.dto.wrk.WRK010Dto</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>wrk011dto</managed-bean-name>
+		<managed-bean-class>org.mega.dto.wrk.WRK011Dto</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>wrk012dto</managed-bean-name>
+		<managed-bean-class>org.mega.dto.wrk.WRK012Dto</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<navigation-rule id="MEGA">
+		<description>SkyHub</description>
+		<display-name>HUB</display-name>
+		<from-view-id>*</from-view-id>
+		<navigation-case id="popup">
+			<from-outcome>popup</from-outcome>
+			<to-view-id>/popup.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case id="login">
+			<from-outcome>login</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case id="adm010">
+			<from-outcome>adm010</from-outcome>
+			<to-view-id>/page/adm/adm010.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case id="adm011">
+			<from-outcome>adm011</from-outcome>
+			<to-view-id>/page/adm/adm011.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case id="adm012">
+			<from-outcome>adm012</from-outcome>
+			<to-view-id>/page/adm/adm012.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case id="wrk010">
+			<from-outcome>wrk010</from-outcome>
+			<to-view-id>/page/wrk/wrk010.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case id="wrk011">
+			<from-outcome>wrk011</from-outcome>
+			<to-view-id>/page/wrk/wrk011.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case id="wrk012">
+			<from-outcome>wrk012</from-outcome>
+			<to-view-id>/page/wrk/wrk012.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<application>
+		<locale-config>
+			<default-locale>vn</default-locale>
+			<supported-locale>en</supported-locale>
+		</locale-config>
+		<resource-bundle>
+			<base-name>ApplicationResources</base-name>
+			<var>res</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>MessageResources</base-name>
+			<var>msg</var>
+		</resource-bundle>
+	</application>
+</faces-config>

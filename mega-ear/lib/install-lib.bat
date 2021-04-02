@@ -1,0 +1,1 @@
+call mvn install:install-file -DgroupId=org.mega -DartifactId=pdf-fonts -Dversion=1.0 -Dpackaging=jar -Dfile=pdf-fonts.jar

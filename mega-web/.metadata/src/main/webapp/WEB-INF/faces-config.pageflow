@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf16173702236500" configfile="/mega-web/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="HUB" comment="SkyHub" x="122" y="49733" id="pf16173703030211" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf16173703030222 pf16173703030223 pf161737030302273 pf161737030302274 pf161737030302275 pf1617370303023259 pf1617370303023260 pf1617370303023261" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="popup.xhtml" x="338" y="178" id="pf1617370303024262" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf16173703030222" path="/popup.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" x="338" y="562" id="pf1617370303024263" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf16173703030223" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="page/adm/adm010.xhtml" x="338" y="27442" id="pf1617370303027333" referenceLink="//@navigationRule.0/@navigationCase.71/@toViewId|" inlinks="pf161737030302273" path="/page/adm/adm010.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="page/adm/adm011.xhtml" x="338" y="27826" id="pf1617370303027334" referenceLink="//@navigationRule.0/@navigationCase.72/@toViewId|" inlinks="pf161737030302274" path="/page/adm/adm011.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="page/adm/adm012.xhtml" x="338" y="28210" id="pf1617370303027335" referenceLink="//@navigationRule.0/@navigationCase.73/@toViewId|" inlinks="pf161737030302275" path="/page/adm/adm012.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="page/wrk/wrk010.xhtml" x="338" y="97714" id="pf1617370303032516" referenceLink="//@navigationRule.0/@navigationCase.257/@toViewId|" inlinks="pf1617370303023259" path="/page/wrk/wrk010.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="page/wrk/wrk011.xhtml" x="338" y="98098" id="pf1617370303032517" referenceLink="//@navigationRule.0/@navigationCase.258/@toViewId|" inlinks="pf1617370303023260" path="/page/wrk/wrk011.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="page/wrk/wrk012.xhtml" x="338" y="98482" id="pf1617370303032518" referenceLink="//@navigationRule.0/@navigationCase.259/@toViewId|" inlinks="pf1617370303023261" path="/page/wrk/wrk012.xhtml"/>
+  <links id="pf16173703030222" target="pf1617370303024262" source="pf16173703030211" outcome="popup"/>
+  <links id="pf16173703030223" target="pf1617370303024263" source="pf16173703030211" outcome="login"/>
+  <links id="pf161737030302273" target="pf1617370303027333" source="pf16173703030211" outcome="adm010"/>
+  <links id="pf161737030302274" target="pf1617370303027334" source="pf16173703030211" outcome="adm011"/>
+  <links id="pf161737030302275" target="pf1617370303027335" source="pf16173703030211" outcome="adm012"/>
+  <links id="pf1617370303023259" target="pf1617370303032516" source="pf16173703030211" outcome="wrk010"/>
+  <links id="pf1617370303023260" target="pf1617370303032517" source="pf16173703030211" outcome="wrk011"/>
+  <links id="pf1617370303023261" target="pf1617370303032518" source="pf16173703030211" outcome="wrk012"/>
+</pageflow:Pageflow>

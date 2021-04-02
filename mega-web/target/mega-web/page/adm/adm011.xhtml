@@ -1,0 +1,454 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	encoding="UTF-8" contentType="text/html;charset=UTF-8">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"></meta>
+	<title>#{adm011Bean.title}</title>
+	<link href="#{request.contextPath}/skins/skin.css" rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/skins/jquery-ui.css" rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/plugins/lightgallery/css/lightgallery.css" rel="stylesheet" type="text/css" />
+	<script src="#{request.contextPath}/js/jquery-2.1.1.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/tinymce/tinymce.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/jquery-ui.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/hashset.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/hashtable.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/jquery.numberformatter.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/jquery.ui.timepicker.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/common.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/data-table.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/splitter.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/plugins/lightgallery/js/lib/lightgallery.min.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/plugins/lightgallery/js/lib/lg-zoom.js" type="text/javascript"></script>
+</h:head>
+<h:body>
+	<h:form id="mainForm" prependId="false">
+		<ui:include src="/include/common.xhtml" />
+		<ui:include src="/include/datepicker.xhtml" />
+		<ui:include src="/include/message.xhtml" />
+		<!-- Form action start -->
+		<div id="formaction" class="form-action container">
+			<div class="row">
+				<div class="col-18">
+					<h:commandButton id="cbClose" styleClass="btn btn-default btn-margin" value="#{res['common.button.close']}" action="#{adm011Bean.doAction('closeAction')}" immediate="true"></h:commandButton>
+					<h:commandButton id="cbEdit" styleClass="btn btn-primary btn-margin" value="#{res['common.button.edit']}" action="#{adm011Bean.doAction('editAction')}"
+						disabled="#{adm011dto.disabled('cbEdit')}" rendered="#{adm011dto.rendered('cbEdit')}">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>
+					<h:commandButton id="cbDisable" styleClass="btn btn-default btn-margin" value="#{res['common.button.disable']}" action="#{adm011Bean.doAction('disableAction')}"
+						disabled="true" rendered="#{adm011dto.rendered('cbDisable')}">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>
+					<h:commandButton id="cbEnable" styleClass="btn btn-default btn-margin" value="#{res['common.button.enable']}" action="#{adm011Bean.doAction('enableAction')}" disabled="true"
+						rendered="#{adm011dto.rendered('cbEnable')}">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>
+					<h:commandButton id="cbLock" styleClass="btn btn-default btn-margin" value="#{res['common.button.lock']}" action="#{adm011Bean.doAction('lockAction')}" disabled="true"
+						rendered="#{adm011dto.rendered('cbLock')}">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>
+					<h:commandButton id="cbUnlock" styleClass="btn btn-default btn-margin" value="#{res['common.button.unlock']}" action="#{adm011Bean.doAction('unlockAction')}" disabled="true"
+						rendered="#{adm011dto.rendered('cbUnlock')}">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>
+					<h:commandButton id="cbResetPassword" styleClass="btn btn-default btn-margin" style="width:auto;" value="#{res['common.button.resetpassword']}"
+						action="#{adm011Bean.doAction('resetPasswordAction')}" disabled="true" rendered="#{adm011dto.rendered('cbResetPassword')}">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>
+				</div>
+				<div class="col-6 text-right">
+					<h:commandButton id="cbDelete" styleClass="btn btn-default btn-margin" value="#{res['common.button.delete']}" action="#{adm011Bean.doAction('deleteAction')}" disabled="true"></h:commandButton>
+				</div>
+			</div>
+		</div>
+		<!-- Form action end -->
+		<div id="content" class="content">
+			<!-- Form content start -->
+			<div id="formcontent" class="form-content" style="overflow-y: auto;">
+
+				<div class="container24">
+					<!-- Row Title -->
+					<div class="row row-higher">
+						<div class="col-24">
+							<div class="control text-center">
+								<h:outputText styleClass="content-title" value="#{res['adm01.title']}"></h:outputText>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="container24">
+					<div class="row">
+						<div class="col-9">
+							<div class="container9">
+								<div class="row row-height">
+									<div class="col-2">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['adm01.label.account']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="control">
+											<h:outputText id="itAccount" styleClass="form-control" value="#{adm011dto.user.account}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-2">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['adm01.label.expiry']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-2">
+										<div class="control">
+											<h:outputText id="itAccountExpiry" styleClass="form-control" value="#{adm011dto.user.accountExpiry}">
+												<f:convertDateTime pattern="#{uiconfig.patternDate}" timeZone="#{uiconfig.timeZone}" locale="#{uiconfig.locale}" />
+											</h:outputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row row-height">
+									<div class="col-2">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['adm01.label.group']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-7">
+										<div class="control">
+											<h:outputText id="somGroup" styleClass="form-control" value="#{adm011dto.getGroupName(adm011dto.user.userGroup)}"></h:outputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row row-height">
+									<div class="col-2">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['adm01.label.status']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-5">
+										<div class="control">
+											<h:selectBooleanCheckbox id="sbcActive" value="#{adm011dto.user.active}" disabled="true" />
+											<h:outputText styleClass="form-output" value="#{res['adm01.label.active']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-2">
+										<div class="control">
+											<h:selectBooleanCheckbox id="sbcOpen" value="#{adm011dto.user.open}" disabled="true" />
+											<h:outputText styleClass="form-output" value="#{res['adm01.label.open']}"></h:outputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row row-height">
+									<div class="col-2">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['adm01.label.password']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="control">
+											<h:inputSecret id="itPassword" styleClass="form-control" value="#{adm011dto.password}" p:placeholder="#{!adm011dto.editPass ? '' : res['common.input.required']}"
+												disabled="#{!adm011dto.editPass}">
+											</h:inputSecret>
+										</div>
+									</div>
+									<div class="col-2">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['adm01.label.expiry']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-2">
+										<div class="control">
+											<h:outputText id="itPasswordExpiry" styleClass="form-control" value="#{adm011dto.user.passwordExpiry}">
+												<f:convertDateTime pattern="#{uiconfig.patternDate}" timeZone="#{uiconfig.timeZone}" locale="#{uiconfig.locale}" />
+											</h:outputText>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Image -->
+						<div class="col-4">
+							<div id="gGallery" class="image-container" style="border: 1px solid #ccc; width: 120px; height: 120px; margin-left: 30px;">
+								<a href="#{adm011dto.image}"> <h:graphicImage id="gImage" value="#{adm011dto.image}" style="magin:0px;width: 120px;" /></a>
+							</div>
+						</div>
+
+						<div class="col-11">
+							<div class="container11">
+								<div class="row row-height">
+									<div class="col-2">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['adm01.label.name']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-9">
+										<div class="control">
+											<h:outputText id="itName" styleClass="form-control" value="#{adm011dto.user.name}"></h:outputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row row-height">
+									<div class="col-2">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['adm01.label.address']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-9">
+										<div class="control">
+											<h:outputText id="itAddress" styleClass="form-control" value="#{adm011dto.user.address}"></h:outputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row row-height">
+									<div class="col-2">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['adm01.label.phone']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="control">
+											<h:outputText id="itPhone" styleClass="form-control" value="#{adm011dto.user.phone}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-2">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['adm01.label.email']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-4">
+										<div class="control">
+											<h:outputText id="itEmail" styleClass="form-control" value="#{adm011dto.user.email}"></h:outputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row row-higher">
+									<div class="col-2">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['adm01.label.employeecode']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="control">
+											<h:outputText id="itEmployeeName" styleClass="form-control" value="#{adm011dto.user.employeeCode}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-2">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['adm01.label.branch']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-4">
+										<div class="control">
+											<h:outputText id="somBranch" styleClass="form-control" value="#{adm011dto.user.branchName}"></h:outputText>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="container24">
+					<div class="row">
+						<div class="col-10">
+							<div class="control">
+								<h:outputText value="#{res['adm01.label.role']}" />
+							</div>
+						</div>
+						<div class="col-14">
+							<div class="control">
+								<h:outputText value="#{res['adm01.label.business']}" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-10">
+							<div class="table" style="position: relative; margin: 0px 5px; border: none;">
+								<h:dataTable id="tableMainMenu" styleClass="table border" headerClass="table-header" rowClasses="table-row-odd,table-row-even" value="#{adm011dto.userRole}" var="row"
+									cellspacing="0" cellpadding="0">
+									<h:column>
+										<f:facet name="header">
+											<div style="width: 100px; height: 25px;">
+												<h:outputText value="#{res['common.label.blank']}" />
+											</div>
+											<div style="width: 100px;" class="col-header">
+												<h:outputText value="#{res['adm01.table.rolecode']}" />
+											</div>
+										</f:facet>
+										<div style="width: 100px;" class="form-output">
+											<h:outputText value="#{row.roleCode}"></h:outputText>
+										</div>
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">
+											<div style="width: 180px;">
+												<h:outputText value="#{res['common.label.blank']}" />
+											</div>
+											<div style="width: 180px;" class="col-header">
+												<h:outputText value="#{res['adm01.table.rolename']}" />
+											</div>
+										</f:facet>
+										<div style="width: 180px;" class="form-output">
+											<h:outputText value="#{row.roleName}"></h:outputText>
+										</div>
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">
+											<div style="width: 120px;">
+												<h:outputText value="#{res['common.label.blank']}" />
+											</div>
+											<div style="width: 120px;" class="col-header">
+												<h:outputText value="#{res['adm01.table.leveldata']}" />
+											</div>
+										</f:facet>
+										<div style="width: 120px;" class="form-output">
+											<h:outputText value="#{adm011dto.getLevelData(row.levelData)}"></h:outputText>
+										</div>
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">
+											<div style="width: 50px;">
+												<h:outputText value="#{res['common.label.blank']}" />
+											</div>
+											<div style="width: 50px;" class="col-header">
+												<h:outputText value="#{res['adm01.table.select']}" />
+											</div>
+										</f:facet>
+										<div style="width: 50px;" class="text-center">
+											<h:selectBooleanCheckbox value="#{row.selected}" disabled="true">
+											</h:selectBooleanCheckbox>
+										</div>
+									</h:column>
+								</h:dataTable>
+							</div>
+						</div>
+						<div class="col-14">
+							<div class="table" style="position: relative; margin: 0px 5px; border: none;">
+								<h:dataTable id="tableControl" styleClass="table border" headerClass="table-header" rowClasses="table-row-odd,table-row-even" value="#{adm011dto.userBusiness}" var="row"
+									cellspacing="0" cellpadding="0">
+									<h:column>
+										<f:facet name="header">
+											<div style="width: 32px;" class="col-header-blank">
+												<h:outputText value="#{res['common.label.blank']}" />
+											</div>
+											<div style="width: 32px;" class="col-header row-header-left last">
+												<h:outputText value="#{res['adm01.table.no']}" />
+											</div>
+										</f:facet>
+										<div style="width: 32px;" class="row-header-left last form-output text-right">
+											<h:outputText styleClass="form-lable" value="#{row.index}" />
+										</div>
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">
+											<div style="width: 100px;">
+												<h:outputText value="#{res['common.label.blank']}" />
+											</div>
+											<div style="width: 100px;" class="col-header">
+												<h:outputText value="#{res['adm01.table.businesscode']}" />
+											</div>
+										</f:facet>
+										<div style="width: 100px;" class="form-output">
+											<h:outputText value="#{row.business}"></h:outputText>
+										</div>
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">
+											<div style="width: 180px;">
+												<h:outputText value="#{res['common.label.blank']}" />
+											</div>
+											<div style="width: 180px;" class="col-header">
+												<h:outputText value="#{res['adm01.table.businessname']}" />
+											</div>
+										</f:facet>
+										<div style="width: 180px;" class="form-output">
+											<h:outputText value="#{row.businessName}"></h:outputText>
+										</div>
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">
+											<div style="width: 120px;">
+												<h:outputText value="#{res['common.label.blank']}" />
+											</div>
+											<div style="width: 120px;" class="col-header">
+												<h:outputText value="#{res['adm01.table.leveldata']}" />
+											</div>
+										</f:facet>
+										<div style="width: 120px;" class="form-control">
+											<h:outputText value="#{adm011dto.getLevelData(row.levelData)}"></h:outputText>
+										</div>
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">
+											<div style="width: 80px;">
+												<h:outputText value="#{res['common.label.blank']}" />
+											</div>
+											<div style="width: 80px;" class="col-header">
+												<h:outputText value="#{res['adm01.table.approve1']}" />
+											</div>
+										</f:facet>
+										<div style="width: 80px;" class="text-center">
+											<h:selectBooleanCheckbox value="#{row.levelApprove1}" disabled="true">
+											</h:selectBooleanCheckbox>
+										</div>
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">
+											<div style="width: 80px;">
+												<h:outputText value="#{res['common.label.blank']}" />
+											</div>
+											<div style="width: 80px;" class="col-header">
+												<h:outputText value="#{res['adm01.table.approve2']}" />
+											</div>
+										</f:facet>
+										<div style="width: 80px;" class="text-center">
+											<h:selectBooleanCheckbox value="#{row.levelApprove2}" disabled="true">
+											</h:selectBooleanCheckbox>
+										</div>
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">
+											<div style="width: 80px;">
+												<h:outputText value="#{res['common.label.blank']}" />
+											</div>
+											<div style="width: 80px;" class="col-header">
+												<h:outputText value="#{res['adm01.table.approve3']}" />
+											</div>
+										</f:facet>
+										<div style="width: 80px;" class="text-center">
+											<h:selectBooleanCheckbox value="#{row.levelApprove3}" disabled="true">
+											</h:selectBooleanCheckbox>
+										</div>
+									</h:column>
+								</h:dataTable>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Form content end -->
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				$('#gGallery').lightGallery(); 
+			});
+		</script>
+	</h:form>
+</h:body>
+	</html>
+</f:view>

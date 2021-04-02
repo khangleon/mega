@@ -1,0 +1,130 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>mega-ear</artifactId>
+	<packaging>ear</packaging>
+	<parent>
+		<artifactId>mega</artifactId>
+		<groupId>org.mega</groupId>
+		<version>1.0.0</version>
+	</parent>
+
+	<dependencies>
+		<!-- web and ejb modules -->
+		<dependency>
+			<groupId>org.mega</groupId>
+			<artifactId>mega-common</artifactId>
+			<version>1.0.0</version>
+			<type>jar</type>
+			<exclusions>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.mega</groupId>
+			<artifactId>mega-dao</artifactId>
+			<version>1.0.0</version>
+			<type>jar</type>
+			<exclusions>
+				<exclusion>
+					<artifactId>eclipselink</artifactId>
+					<groupId>org.eclipse.persistence</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.mega</groupId>
+			<artifactId>mega-dto</artifactId>
+			<version>1.0.0</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.mega</groupId>
+			<artifactId>mega-client</artifactId>
+			<version>1.0.0</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.mega</groupId>
+			<artifactId>mega-business</artifactId>
+			<version>1.0.0</version>
+			<type>ejb</type>
+			<exclusions>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.mega</groupId>
+			<artifactId>mega-web</artifactId>
+			<version>1.0.0</version>
+			<type>war</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mega</groupId>
+			<artifactId>pdf-fonts</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>mega</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.9.1</version>
+				<configuration>
+					<applicationName>mega</applicationName>
+					<displayName>mega</displayName>
+					<modules>
+						<jarModule>
+							<groupId>org.mega</groupId>
+							<artifactId>mega-common</artifactId>
+						</jarModule>
+						<jarModule>
+							<groupId>org.mega</groupId>
+							<artifactId>mega-dao</artifactId>
+						</jarModule>
+						<jarModule>
+							<groupId>org.mega</groupId>
+							<artifactId>mega-dto</artifactId>
+						</jarModule>
+						<jarModule>
+							<groupId>org.mega</groupId>
+							<artifactId>mega-client</artifactId>
+						</jarModule>
+						<webModule>
+							<artifactId>mega-web</artifactId>
+							<groupId>org.mega</groupId>
+							<contextRoot>/mega</contextRoot>
+						</webModule>
+						<ejbModule>
+							<groupId>org.mega</groupId>
+							<artifactId>mega-business</artifactId>
+						</ejbModule>
+					</modules>
+					<generateApplicationXml>true</generateApplicationXml>
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
+					<outputDirectory>E:\projects\mega-server\standalone\deployments</outputDirectory>
+				</configuration>
+			</plugin>
+			<!-- WildFly plugin to deploy ear -->
+			<!-- <plugin> <groupId>org.wildfly.plugins</groupId> <artifactId>wildfly-maven-plugin</artifactId> 
+				<version>1.0.2.Final</version> <configuration> <filename>mega.ear</filename> 
+				<skip>false</skip> </configuration> </plugin> -->
+		</plugins>
+	</build>
+</project>

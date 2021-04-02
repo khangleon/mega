@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml">
+	<div class="menu-bar">
+		<ui:repeat id="menubar" var="item" value="#{pagedto.mainMenu}">
+			<div class="menu-item-box" data-show="false" onclick="showSubMenu(event, this);">
+				<div class="menu-item #{item.id == pagedto.mainSelected ? 'active' : ''}">
+					<h:outputText value="#{item.name}" />
+				</div>
+				<div class="sub-menu">
+					<ui:repeat id="submenu" var="subitem" value="#{item.subMenu}">
+						<h:panelGroup layout="block" styleClass="nav-item #{subitem.id == pagedto.menuSelected ? 'active' : ''}"
+							rendered="#{!subitem.menuGroup}" onclick="menuSubmit('#{item.id}', '#{subitem.id}');">
+							<h:outputText value="#{subitem.name}" />
+						</h:panelGroup>
+					</ui:repeat>
+				</div>
+			</div>
+		</ui:repeat>
+	</div>
+
+	<h:commandButton id="cbMenuSubmit" styleClass="hide" action="#{page.doAction('changeSubMenu')}" value="Submit">
+		<f:ajax execute="ihMenuMainId ihMenuSubId" render="@form"></f:ajax>
+	</h:commandButton>
+	<h:inputHidden id="ihMenuMainId" value="#{pagedto.mainSelected}" />
+	<h:inputHidden id="ihMenuSubId" value="#{pagedto.menuSelected}" />
+
+	<script type="text/javascript">
+		function showSubMenu(e, menu) {
+			menu = $(menu);
+			var isShow = toBoolean(menu.attr('data-show'));
+			var block = null;
+			if (isShow ) {
+				isShow = false;
+				menu.removeClass('show-sub-menu');
+				
+				block = hideDivBlock();
+				block.unbind('click', hideSubMenu);
+			} else {
+				hideSubMenu();
+				
+				isShow = true;
+				menu.addClass('show-sub-menu');
+				
+				block = showDivBlock();
+				block.bind('click', hideSubMenu);
+			}
+
+			menu.attr('data-show', isShow);
+			stopEvent(e);
+		}
+
+		function hideSubMenu(e) {
+			var allMenu = $("div.menu-bar > div.menu-item-box");
+			allMenu.each(function(i, el) {
+				el = $(el);
+				if (toBoolean(el.attr('data-show'))) {
+					el.removeClass('show-sub-menu');
+					el.attr('data-show', false);
+				}
+			});
+
+			var block = hideDivBlock();
+			block.unbind('click', hideSubMenu);
+			stopEvent(e);
+		}
+
+		function menuSubmit(mainId, subId) {
+			$('#ihMenuMainId').val(mainId);
+			$('#ihMenuSubId').val(subId);
+			$('#cbMenuSubmit').click();
+		}
+	</script>
+</f:view>

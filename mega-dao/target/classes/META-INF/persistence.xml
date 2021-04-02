@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="mega" transaction-type="JTA">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<jta-data-source>java:jboss/hubDS</jta-data-source>
+		<class>org.mega.dao.entity.MGenId</class>
+		<class>org.mega.dao.entity.MSeq</class>
+		<class>org.mega.dao.entity.Branch</class>
+		<class>org.mega.dao.entity.BusinessControl</class>
+		<class>org.mega.dao.entity.BusinessFlow</class>
+		<class>org.mega.dao.entity.Company</class>
+		<class>org.mega.dao.entity.Country</class>
+		<class>org.mega.dao.entity.Currency</class>
+		<class>org.mega.dao.entity.Customer</class>
+		<class>org.mega.dao.entity.CustomerCategory</class>
+		<class>org.mega.dao.entity.CustomerGroup</class>
+		<class>org.mega.dao.entity.CustomerContact</class>
+		<class>org.mega.dao.entity.Department</class>
+		<class>org.mega.dao.entity.District</class>
+		<class>org.mega.dao.entity.Employee</class>
+		<class>org.mega.dao.entity.Event</class>
+		<class>org.mega.dao.entity.EventGuest</class>
+		<class>org.mega.dao.entity.Menu</class>
+		<class>org.mega.dao.entity.Page</class>
+		<class>org.mega.dao.entity.Province</class>
+		<class>org.mega.dao.entity.Role</class>
+		<class>org.mega.dao.entity.RoleBusiness</class>
+		<class>org.mega.dao.entity.RoleBusinessControl</class>
+		<class>org.mega.dao.entity.RoleMenu</class>
+		<class>org.mega.dao.entity.Unit</class>
+		<class>org.mega.dao.entity.UserMenu</class>
+		<class>org.mega.dao.entity.UserBusiness</class>
+		<class>org.mega.dao.entity.UserRole</class>
+		<class>org.mega.dao.entity.Users</class>
+		<class>org.mega.dao.entity.UserStatus</class>
+		<class>org.mega.dao.entity.Ward</class>
+		<class>org.mega.dao.bean.InventoryIO</class>
+
+		<shared-cache-mode>NONE</shared-cache-mode>
+		<properties>
+			<property name="eclipselink.target-server" value="JBoss" />
+			<property name="eclipselink.target-database" value="PostgreSQL" />
+			<property name="eclipselink.jdbc.uppercase-columns" value="false" />
+			<property name="eclipselink.result-collection-type" value="java.util.ArrayList" />
+			<property name="eclipselink.logging.level" value="FINEST" />
+			<property name="eclipselink.logging.level.sql" value="FINEST" />
+			<property name="eclipselink.logging.parameters" value="true" />
+			<property name="jdbc.persistence.logging" value="true" />
+		</properties>
+	</persistence-unit>
+</persistence>
