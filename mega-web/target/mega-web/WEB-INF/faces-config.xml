@@ -69,37 +69,37 @@
 		<from-view-id>*</from-view-id>
 		<navigation-case id="popup">
 			<from-outcome>popup</from-outcome>
-			<to-view-id>/popup.xhtml</to-view-id>
+			<to-view-id>/popup.html</to-view-id>
 		</navigation-case>
 		<navigation-case id="login">
 			<from-outcome>login</from-outcome>
-			<to-view-id>/login.xhtml</to-view-id>
+			<to-view-id>/login.html</to-view-id>
 		</navigation-case>
 		
 		<navigation-case id="adm010">
 			<from-outcome>adm010</from-outcome>
-			<to-view-id>/page/adm/adm010.xhtml</to-view-id>
+			<to-view-id>/page/adm/adm010.html</to-view-id>
 		</navigation-case>
 		<navigation-case id="adm011">
 			<from-outcome>adm011</from-outcome>
-			<to-view-id>/page/adm/adm011.xhtml</to-view-id>
+			<to-view-id>/page/adm/adm011.html</to-view-id>
 		</navigation-case>
 		<navigation-case id="adm012">
 			<from-outcome>adm012</from-outcome>
-			<to-view-id>/page/adm/adm012.xhtml</to-view-id>
+			<to-view-id>/page/adm/adm012.html</to-view-id>
 		</navigation-case>
 		
 		<navigation-case id="wrk010">
 			<from-outcome>wrk010</from-outcome>
-			<to-view-id>/page/wrk/wrk010.xhtml</to-view-id>
+			<to-view-id>/page/wrk/wrk010.html</to-view-id>
 		</navigation-case>
 		<navigation-case id="wrk011">
 			<from-outcome>wrk011</from-outcome>
-			<to-view-id>/page/wrk/wrk011.xhtml</to-view-id>
+			<to-view-id>/page/wrk/wrk011.html</to-view-id>
 		</navigation-case>
 		<navigation-case id="wrk012">
 			<from-outcome>wrk012</from-outcome>
-			<to-view-id>/page/wrk/wrk012.xhtml</to-view-id>
+			<to-view-id>/page/wrk/wrk012.html</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

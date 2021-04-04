@@ -376,6 +376,15 @@ a.bg-danger:hover {
 	width: 50px;
 }
 
+.login-face {
+	width: 290px;
+    margin: 0 auto;
+    border: 1px solid #030;
+    padding: 15px 40px;
+    border-radius: 10px;
+    box-shadow: 2px 4px 6px #95bbb8;
+}
+
 .page-name {
 	display: inline;
 	line-height: 32px;

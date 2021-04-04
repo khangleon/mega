@@ -754,11 +754,11 @@ public abstract class BaseBean extends CoreBean {
 		putParamPage(POPUP_PAGE, true);
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		String pageUrl = "/page/" + pageId.substring(0, 3) + "/" + pageId + ".xhtml";
+		String pageUrl = "/page/" + pageId.substring(0, 3) + "/" + pageId + ".html";
 
 		// This is the proper way to get the view's url
 		ViewHandler viewHandler = facesContext.getApplication().getViewHandler();
-		String popupUrl = viewHandler.getActionURL(facesContext, "/popup.xhtml");
+		String popupUrl = viewHandler.getActionURL(facesContext, "/popup.html");
 		pageUrl = viewHandler.getActionURL(facesContext, pageUrl);
 
 		String windowName = getPageCode() + pageId;

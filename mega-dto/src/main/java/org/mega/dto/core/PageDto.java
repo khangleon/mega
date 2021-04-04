@@ -57,7 +57,7 @@ public class PageDto implements Serializable {
 
 	public void setPageUrl(String pageUrl) {
 		if (pageUrl == null || pageUrl.trim().isEmpty()) {
-			pageUrl = "/empty.xhtml";
+			pageUrl = "/empty.html";
 		}
 		this.pageUrl = pageUrl;
 	}
