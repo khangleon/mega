@@ -1,0 +1,418 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	encoding="UTF-8" contentType="text/html;charset=UTF-8">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"></meta>
+	<title>#{wrk010Bean.title}</title>
+	<link href="#{request.contextPath}/skins/image/icon.ico" rel="icon" />
+	<link href="#{request.contextPath}/skins/skin.css" rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/skins/jquery-ui.css" rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/skins/jquery.tagit.css" rel="stylesheet" type="text/css" />
+	<script src="#{request.contextPath}/js/jquery-2.1.1.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/tinymce/tinymce.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/jquery-ui.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/tag-it.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/hashset.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/hashtable.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/jquery.numberformatter.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/jquery.ui.timepicker.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/common.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/data-table.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/splitter.js" type="text/javascript"></script>
+</h:head>
+<h:body>
+	<h:form id="mainForm" prependId="false">
+		<h:commandButton id="cbPreventEnterSubmit" onkeypress="return false;" onclick="return false;" style="width:0px; height:0px; border:none;" value="Prevent Enter" />
+		<ui:include src="/include/common.html" />
+		<ui:include src="/include/datepicker.html" />
+		<ui:include src="/include/message.html" />
+
+		<!-- Form action start -->
+		<div id="formaction" class="form-action">
+			<div class="container24">
+				<div class="row">
+					<div class="col-14">
+						<h:commandButton id="cbAddNew" styleClass="btn btn-primary btn-margin" value="#{res['common.button.addnew']}" action="#{wrk010Bean.doAction('addNewAction')}" immediate="true">
+						</h:commandButton>
+						<h:commandButton id="cbImport" styleClass="btn btn-default btn-margin" value="Nhập" action="#{wrk010Bean.doAction('importAction')}">
+						</h:commandButton>
+						<h:commandButton id="cbExport" styleClass="btn btn-default btn-margin" value="Xuất" action="#{wrk010Bean.doAction('exportAction')}">
+						</h:commandButton>
+						<h:commandButton id="cbPrint" styleClass="btn btn-default btn-margin" value="#{res['common.button.print']}" action="#{wrk010Bean.doAction('printAction')}">
+						</h:commandButton>
+					</div>
+					<div class="col-4">
+						<h:inputText id="itSearchQuick" styleClass="form-control no-radius-right" value="#{wrk010dto.quickSearch}" autocomplete="off" tabindex="1"
+							onkeypress="handleEnter(event, 'cbSearchQuick');">
+						</h:inputText>
+					</div>
+					<div class="col-1">
+						<h:commandButton id="cbSearchQuick" styleClass="btn btn-default btn-search no-radius-left no-border-left" value="" title="#{res['common.button.search']}"
+							action="#{wrk010Bean.doAction('searchQuickAction')}">
+							<f:ajax execute="@form" render="@form"></f:ajax>
+						</h:commandButton>
+					</div>
+					<div class="col-5">
+						<div class="container6">
+							<div class="row">
+								<div class="col pull-right table-paging">
+									<h:commandButton id="btPrev" styleClass="btn btn-default page-previous" value="&lt;" action="#{wrk010Bean.doAction('prevPage')}"
+										disabled="#{wrk010dto.tableData.disablePrev}" />
+									<h:commandButton id="btSelectPage" styleClass="btn btn-default page-index" value="#{wrk010dto.tableData.pageIndex}" onclick="return false;"
+										disabled="#{wrk010dto.tableData.disablePage}" />
+									<h:commandButton id="btNext" styleClass="btn btn-default page-next" value="&gt;" action="#{wrk010Bean.doAction('nextPage')}" disabled="#{wrk010dto.tableData.disableNext}" />
+								</div>
+								<div class="col pull-right">
+									<h:outputText styleClass="table-paging" value="#{wrk010dto.tableData.rowBegin} - #{wrk010dto.tableData.rowEnd} / #{wrk010dto.tableData.rowCount}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Form action end -->
+
+		<div id="content" class="content">
+			<!-- Form search start -->
+			<div id="formsearch" class="form-search">
+				<div class="container24">
+					<div class="row row-small">
+						<div class="col-2">
+							<div class="control">
+								<h:outputText styleClass="form-label" value="#{res['wrk01.label.pic']}"></h:outputText>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="control">
+								<h:inputText id="itPicName" styleClass="form-control" value="#{wrk010dto.picName}" autocomplete="off" p:placeholder="#{res['common.label.all']}"></h:inputText>
+								<h:inputHidden id="itPicId" value="#{wrk010dto.picId}"></h:inputHidden>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="control">
+								<h:outputText styleClass="form-label" value="#{res['wrk01.label.creator']}"></h:outputText>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="control">
+								<h:inputText id="itCreatorName" styleClass="form-control" value="#{wrk010dto.creatorName}" autocomplete="off" p:placeholder="#{res['common.label.all']}"></h:inputText>
+								<h:inputHidden id="itCreatorId" value="#{wrk010dto.creatorId}"></h:inputHidden>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="control">
+								<h:outputText styleClass="form-label" value="#{res['wrk01.label.eventtype']}"></h:outputText>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="control">
+								<h:selectOneMenu id="somEventTypeItems" styleClass="form-control" value="#{wrk010dto.eventType}" onchange="handleClick('btSearch');">
+									<f:selectItems value="#{wrk010dto.eventTypeItems}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="control">
+								<h:outputText styleClass="form-label" value="#{res['wrk01.label.status']}"></h:outputText>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="control">
+								<h:selectOneMenu id="somStatus" styleClass="form-control" value="#{wrk010dto.status}" onchange="handleClick('btSearch');">
+									<f:selectItems value="#{wrk010dto.statusItems}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+					</div>
+					<!-- row 2  -->
+					<div class="row row-small">
+						<div class="col-2">
+							<div class="control">
+								<h:outputText styleClass="form-label" value="#{res['wrk01.label.content']}"></h:outputText>
+							</div>
+						</div>
+						<div class="col-10">
+							<div class="control">
+								<h:inputText id="itContent" styleClass="form-control" value="#{wrk010dto.content}" autocomplete="off" p:placeholder="#{res['common.label.all']}"></h:inputText>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="control">
+								<h:outputText styleClass="form-label" value="#{res['wrk01.label.fromdate']}"></h:outputText>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="control">
+								<h:inputText id="itFromDate" styleClass="form-control" value="#{wrk010dto.fromDate}" autocomplete="off" p:placeholder="#{uiconfig.patternDate}">
+									<f:convertDateTime pattern="#{uiconfig.patternDate}" timeZone="#{uiconfig.timeZone}" locale="#{uiconfig.locale}" />
+								</h:inputText>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="control">
+								<h:outputText styleClass="form-label" value="#{res['wrk01.label.todate']}"></h:outputText>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="control">
+								<h:inputText id="itToDate" styleClass="form-control" value="#{wrk010dto.toDate}" autocomplete="off" p:placeholder="#{uiconfig.patternDate}">
+									<f:convertDateTime pattern="#{uiconfig.patternDate}" timeZone="#{uiconfig.timeZone}" locale="#{uiconfig.locale}" />
+								</h:inputText>
+							</div>
+						</div>
+						<div class="col-2 text-right">
+							<h:commandButton id="btSearch" styleClass="btn btn-default btn-search-icon" value="#{res['common.button.search']}" action="#{wrk010Bean.doAction('searchAdvanceAction')}">
+								<f:ajax execute="@form" render="@form"></f:ajax>
+							</h:commandButton>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Form search end -->
+
+			<div id="splitterSearch" style="top: 0px;" class="splitter horizontal" data-above="formsearch" data-under="formcontent" data-min="0" data-max="77" data-location="top"
+				data-direction="up" data-place="under" data-position="0" data-step="77" data-showhide="itSearchQuick cbSearchQuick" data-showshow="">
+				<h:inputHidden id="splitterSearchPosition" value="#{viewScope.splitterSearchPosition}" />
+			</div>
+
+			<!-- Form content start -->
+			<div id="formcontent" class="form-content" style="overflow-y: auto;">
+				<div class="table">
+					<h:dataTable id="tableEvent" styleClass="table" headerClass="table-header" rowClasses="table-row-odd,table-row-even" value="#{wrk010dto.dataTable}" var="row" cellspacing="0"
+						cellpadding="0">
+						<h:column>
+							<f:facet name="header">
+								<div style="width: 25px;" class="col-header-blank">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 25px;" class="col-header row-header-left">
+									<h:selectBooleanCheckbox styleClass="row-selected-all" value="#{wrk010dto.tableData.allSelected}" />
+								</div>
+							</f:facet>
+							<div style="width: 25px;" class="row-header-left">
+								<h:selectBooleanCheckbox styleClass="row-selected" value="#{row.selected}" />
+							</div>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<div style="width: 32px;" class="col-header-blank">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 32px;" class="col-header row-header-left last">
+									<h:outputText value="#{res['wrk01.table.no']}" />
+								</div>
+							</f:facet>
+							<div style="width: 32px;" class="row-header-left last form-output text-right">
+								<h:outputText styleClass="form-lable" value="#{row.index}" />
+							</div>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<div style="width: 250px;">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 250px;" class="col-header">
+									<h:outputText value="#{res['wrk01.table.content']}" />
+								</div>
+							</f:facet>
+							<div style="width: 250px;" class="form-output">
+								<h:commandLink id="clCode" action="#{wrk010Bean.doAction('viewAction')}" value="#{row.content}">
+									<f:setPropertyActionListener value="#{row.id}" target="#{wrk010dto.idSelected}" />
+								</h:commandLink>
+							</div>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<div style="width: 200px;">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 200px;" class="col-header">
+									<h:outputText value="#{res['wrk01.table.pic']}" />
+								</div>
+							</f:facet>
+							<div style="width: 200px;" class="form-output">
+								<h:outputText value="#{row.picName}" />
+							</div>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<div style="width: 120px;">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 120px;" class="col-header">
+									<h:outputText value="#{res['wrk01.label.startdate']}" />
+								</div>
+							</f:facet>
+							<div style="width: 120px;" class="form-output">
+								<h:outputText value="#{row.startDate}">
+									<f:convertDateTime pattern="#{uiconfig.patternDate}" timeZone="#{uiconfig.timeZone}" locale="#{uiconfig.locale}" />
+								</h:outputText>
+								<h:outputText value="#{row.startTime}" style="margin-left:5px">
+									<f:convertDateTime pattern="#{uiconfig.patternTimeShort}" timeZone="#{uiconfig.timeZone}" locale="#{uiconfig.locale}" />
+								</h:outputText>
+							</div>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<div style="width: 120px;">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 120px;" class="col-header">
+									<h:outputText value="#{res['wrk01.label.enddate']}" />
+								</div>
+							</f:facet>
+							<div style="width: 120px;" class="form-output">
+								<h:outputText value="#{row.endDate}">
+									<f:convertDateTime pattern="#{uiconfig.patternDate}" timeZone="#{uiconfig.timeZone}" locale="#{uiconfig.locale}" />
+								</h:outputText>
+								<h:outputText value="#{row.endTime}" style="margin-left:5px">
+									<f:convertDateTime pattern="#{uiconfig.patternTimeShort}" timeZone="#{uiconfig.timeZone}" locale="#{uiconfig.locale}" />
+								</h:outputText>
+							</div>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<div style="width: 250px;">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 250px;" class="col-header">
+									<h:outputText value="#{res['wrk01.table.where']}" />
+								</div>
+							</f:facet>
+							<div style="width: 250px;" class="form-output">
+								<h:outputText value="#{row.eventWhere}" />
+							</div>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<div style="width: 100px;">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 100px;" class="col-header">
+									<h:outputText value="#{res['wrk01.table.status']}" />
+								</div>
+							</f:facet>
+							<div style="width: 100px;" class="form-output">
+								<h:outputText value="#{wrk010dto.getStatusName(row.status)}" />
+							</div>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<div style="width: 100px;">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 100px;" class="col-header">
+									<h:outputText value="#{res['wrk01.label.eventtype']}" />
+								</div>
+							</f:facet>
+							<div style="width: 100px;" class="form-output">
+								<h:outputText value="#{wrk010dto.getEventTypeName(row.eventType)}" />
+							</div>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<div style="width: 200px;">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 200px;" class="col-header">
+									<h:outputText value="#{res['wrk01.table.creator']}" />
+								</div>
+							</f:facet>
+							<div style="width: 200px;" class="form-output">
+								<h:outputText value="#{row.creatorName}" />
+							</div>
+						</h:column>
+
+					</h:dataTable>
+				</div>
+			</div>
+			<!-- Form content end -->
+
+		</div>
+
+		<script type="text/javascript">
+			splitterInit();
+			initDataTable();
+
+			$(function() {
+				var pickerOptions = datePickerOptions();
+				$('#itFromDate').datepicker(pickerOptions);
+				$('#itToDate').datepicker(pickerOptions);
+
+				$("#itCreatorName").autocomplete({
+					minLength : 0,
+					cacheLength : 0,
+					source : function(request, response) {
+						$.ajax({
+							url : "#{request.contextPath}/employee",
+							contentType : "application/json",
+							dataType : "json",
+							cache : false,
+							data : {
+								q : request.term
+							},
+							success : function(data) {
+								response(data);
+							}
+						});
+					},
+					focus : function(event, ui) {
+						return false;
+					},
+					select : function(event, ui) {
+						$("#itCreatorName").val(ui.item.label);
+						$("#itCreatorId").val(ui.item.value);
+						return false;
+					}
+				}).autocomplete("instance")._renderItem = function(ul, item) {
+					return $("<li/>").append("<a>" + item.desc + "</a>")
+							.appendTo(ul);
+				};
+
+				$("#itPicName").autocomplete({
+					minLength : 0,
+					cacheLength : 0,
+					source : function(request, response) {
+						$.ajax({
+							url : "#{request.contextPath}/employee",
+							contentType : "application/json",
+							dataType : "json",
+							cache : false,
+							data : {
+								q : request.term
+							},
+							success : function(data) {
+								response(data);
+							}
+						});
+					},
+					focus : function(event, ui) {
+						return false;
+					},
+					select : function(event, ui) {
+						$("#itPicName").val(ui.item.label);
+						$("#itPicId").val(ui.item.value);
+						return false;
+					}
+				}).autocomplete("instance")._renderItem = function(ul, item) {
+					return $("<li/>").append("<a>" + item.desc + "</a>")
+							.appendTo(ul);
+				};
+			});
+		</script>
+	</h:form>
+</h:body>
+	</html>
+</f:view>

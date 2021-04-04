@@ -1,0 +1,606 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	encoding="UTF-8" contentType="text/html;charset=UTF-8">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"></meta>
+	<title>#{wrk012Bean.title}</title>
+	<link href="#{request.contextPath}/skins/image/icon.ico" rel="icon" />
+	<link href="#{request.contextPath}/skins/skin.css" rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/skins/jquery-ui.css" rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/skins/jquery.tagit.css" rel="stylesheet" type="text/css" />
+	<script src="#{request.contextPath}/js/jquery-2.1.1.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/tinymce/tinymce.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/jquery-ui.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/tag-it.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/hashset.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/hashtable.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/jquery.numberformatter.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/jquery.ui.timepicker.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/dateformat.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/common.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/data-table.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/splitter.js" type="text/javascript"></script>
+</h:head>
+<h:body>
+	<h:form id="mainForm" prependId="false">
+		<h:commandButton id="cbPreventEnterSubmit" onkeypress="return false;" onclick="return false;" style="width:0px; height:0px; border:none;" value="Prevent Enter" />
+		<ui:include src="/include/common.html" />
+		<ui:include src="/include/datepicker.html" />
+		<ui:include src="/include/message.html" />
+
+
+		<!-- Form action start -->
+		<div id="formaction" class="form-action">
+			<div class="container">
+				<div class="row">
+					<div class="col-17">
+						<h:commandButton id="cbClose" styleClass="btn btn-default btn-margin" value="#{res['common.button.close']}" action="#{wrk012Bean.doAction('closeAction')}" immediate="true">
+						</h:commandButton>
+						<h:commandButton id="cbSave" styleClass="btn btn-primary btn-margin" value="#{res['common.button.save']}" action="#{wrk012Bean.doAction('saveAction')}"
+							disabled="#{wrk012dto.disabled('cbSave')}">
+							<f:ajax execute="@form" render="@form"></f:ajax>
+						</h:commandButton>
+						<h:commandButton id="cbPrint" styleClass="btn btn-default btn-margin" value="#{res['common.button.print']}" action="#{wrk012Bean.doAction('printAction')}"
+							disabled="#{wrk012dto.disabled('cbPrint')}">
+							<f:ajax execute="@form" render="@form"></f:ajax>
+						</h:commandButton>
+						<h:commandButton id="cbProcessing" styleClass="btn btn-default btn-margin" value="#{res['common.button.processing']}" action="#{wrk012Bean.doAction('processingAction')}"
+							disabled="#{wrk012dto.disabled('cbProcessing')}">
+							<f:ajax execute="@form" render="@form"></f:ajax>
+						</h:commandButton>
+						<h:commandButton id="cbDone" styleClass="btn btn-default btn-margin" value="#{res['common.button.done']}" action="#{wrk012Bean.doAction('doneAction')}"
+							disabled="#{wrk012dto.disabled('cbDone')}">
+							<f:ajax execute="@form" render="@form"></f:ajax>
+						</h:commandButton>
+					</div>
+					<div class="col-3">
+						<div id="comboStandard" class="combo-item-box" onclick="" data-show="false">
+							<h:commandButton id="cbStandard" styleClass="btn btn-default combo-left" value="#{res['common.combo.exportpdf']}" style="width:100%;"
+								action="#{wrk012Bean.doAction('standardAction')}" disabled="#{wrk012dto.disabled('cbStandard')}"></h:commandButton>
+							<h:inputHidden id="cbStandardValue" value="#{wrk012dto.standardAction}" />
+							<div class="combo-sub-menu" onclick="hideComboItem();">
+								<h:commandButton styleClass="combo-item" value="#{res['common.combo.exportpdf']}"
+									onclick="selectComboItem('cbStandard', '#{res['common.combo.exportpdf']}', 'exportPdfAction'); return false;">
+								</h:commandButton>
+								<h:commandButton styleClass="combo-item" value="#{res['common.combo.exportexcel']}"
+									onclick="selectComboItem('cbStandard', '#{res['common.combo.exportexcel']}', 'exportExcelAction'); return false;">
+								</h:commandButton>
+								<h:commandButton styleClass="combo-item" value="#{res['common.combo.exportcsv']}"
+									onclick="selectComboItem('cbStandard', '#{res['common.combo.exportcsv']}', 'exportCsvAction'); return false;">
+								</h:commandButton>
+								<h:commandButton styleClass="combo-item" value="#{res['common.combo.exportdoc']}"
+									onclick="selectComboItem('cbStandard', '#{res['common.combo.exportdoc']}', 'exportDocAction'); return false;">
+								</h:commandButton>
+								<h:commandButton styleClass="combo-item" value="#{res['common.combo.exportimage']}"
+									onclick="selectComboItem('cbStandard', '#{res['common.combo.exportimage']}', 'exportImageAction'); return false;">
+								</h:commandButton>
+								<h:commandButton styleClass="combo-item" value="#{res['common.combo.exporthtml']}"
+									onclick="selectComboItem('cbStandard', '#{res['common.combo.exporthtml']}', 'exportHtmlAction'); return false;">
+								</h:commandButton>
+							</div>
+						</div>
+					</div>
+					<div class="col-2">
+						<h:commandButton id="cbStandardSelect" styleClass="btn btn-default combo-right" value="V" onclick="showComboItem('#comboStandard'); return false;"
+							disabled="#{wrk012dto.disabled('cbStandard')}" />
+					</div>
+					<div class="col-2 text-right">
+						<h:commandButton id="cbDelete" styleClass="btn btn-default btn-margin hide" value="#{res['common.button.delete']}" action="#{wrk012Bean.doAction('deleteAction')}"
+							disabled="#{wrk012dto.disabled('cbDelete')}">
+						</h:commandButton>
+						<h:commandButton id="cbDeleteConfirm" styleClass="btn btn-default btn-margin" value="#{res['common.button.delete']}" action="#{wrk012Bean.doAction('deleteConfirmAction')}"
+							disabled="#{wrk012dto.disabled('cbDelete')}">
+							<f:ajax execute="@form" render="@form"></f:ajax>
+						</h:commandButton>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Form action end -->
+
+		<div id="content" class="content">
+			<!-- Form content start -->
+			<div id="formcontent" class="form-content" style="overflow-y: auto;">
+				<!-- Header Info start -->
+				<div class="container24">
+					<h:commandButton id="cbEventGuest" styleClass="btn btn-primary hide" value="Change EventGuest" action="#{wrk012Bean.doAction('changeEventGuestAction')}">
+						<f:ajax execute="@form" render="@form"></f:ajax>
+					</h:commandButton>
+					<h:inputHidden id="itEventGuestValue" value="#{wrk012dto.eventGuestValue}" />
+
+					<!-- Row Title -->
+					<div class="row row-higher">
+						<div class="col-24">
+							<div class="control text-center">
+								<h:outputText styleClass="content-title" value="#{res['wrk01.title']}"></h:outputText>
+							</div>
+						</div>
+					</div>
+
+					<!-- Row 1 -->
+					<div class="row row-height">
+						<div class="col-3">
+							<div class="control">
+								<h:outputText styleClass="form-label" value="#{res['common.label.blank']}"></h:outputText>
+							</div>
+						</div>
+						<div class="col-9">
+							<div class="control">
+								<h:selectOneRadio id="sorEventType" value="#{wrk012dto.event.eventType}" layout="lineDirection" style="width:100%;">
+									<f:selectItems value="#{wrk012dto.eventTypeItems}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" />
+								</h:selectOneRadio>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-12">
+							<div class="container12">
+								<div class="row row-height">
+									<div class="col-3">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['wrk01.label.content']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-9">
+										<div class="control">
+											<h:inputText id="itContent" styleClass="form-control" value="#{wrk012dto.event.content}" autocomplete="off" p:placeholder="#{res['common.input.required']}"></h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row row-height">
+									<div class="col-3">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['wrk01.table.eventwhere']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-9">
+										<div class="control">
+											<h:inputText id="itEventWhere" styleClass="form-control" value="#{wrk012dto.event.eventWhere}" autocomplete="off"></h:inputText>
+										</div>
+									</div>
+								</div>
+
+								<div class="row row-height">
+									<div class="col-3">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['wrk01.label.startdate']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-9">
+										<div class="container12">
+											<div class="row row-height">
+												<div class="col-3">
+													<div class="control">
+														<h:inputText id="itStartDate" styleClass="form-control" value="#{wrk012dto.event.startDate}" autocomplete="off" p:placeholder="#{uiconfig.patternDate}">
+															<f:convertDateTime pattern="#{uiconfig.patternDate}" timeZone="#{uiconfig.timeZone}" locale="#{uiconfig.locale}" />
+															<f:ajax execute="@this" render="otStartOn"></f:ajax>
+														</h:inputText>
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="control">
+														<h:inputText id="itStartTime" styleClass="form-control" value="#{wrk012dto.event.startTime}" autocomplete="off" p:placeholder="#{uiconfig.patternTimeShort}">
+															<f:convertDateTime pattern="#{uiconfig.patternTimeShort}" timeZone="#{uiconfig.timeZone}" locale="#{uiconfig.locale}" />
+														</h:inputText>
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="control">
+														<h:outputText styleClass="form-label" value="#{res['wrk01.label.enddate']}"></h:outputText>
+													</div>
+												</div>
+												<div class="col-3">
+													<div class="control">
+														<h:inputText id="itEndDate" styleClass="form-control" value="#{wrk012dto.event.endDate}" autocomplete="off" p:placeholder="#{uiconfig.patternDate}">
+															<f:convertDateTime pattern="#{uiconfig.patternDate}" timeZone="#{uiconfig.timeZone}" locale="#{uiconfig.locale}" />
+														</h:inputText>
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="control">
+														<h:inputText id="itEndTime" styleClass="form-control" value="#{wrk012dto.event.endTime}" autocomplete="off" p:placeholder="#{uiconfig.patternTimeShort}">
+															<f:convertDateTime pattern="#{uiconfig.patternTimeShort}" timeZone="#{uiconfig.timeZone}" locale="#{uiconfig.locale}" />
+														</h:inputText>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row row-height">
+									<div class="col-3">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['wrk01.label.contentdetail']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-9">
+										<div class="control">
+											<h:inputTextarea id="itContentDetail" styleClass="form-control" value="#{wrk012dto.event.contentDetail}" autocomplete="off" rows="9"></h:inputTextarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-12">
+							<div class="container12">
+								<div class="row row-height">
+									<div class="col-3">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['wrk01.label.priority']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-4">
+										<div class="control">
+											<h:selectOneMenu id="somPriority" styleClass="form-control" value="#{wrk012dto.event.priority}">
+												<f:selectItems value="#{wrk012dto.priorityItems}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+									<div class="col-2">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['wrk01.label.status']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="control">
+											<h:selectOneMenu id="somStatus" styleClass="form-control" value="#{wrk012dto.event.status}">
+												<f:selectItems value="#{wrk012dto.statusItems}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+								</div>
+
+								<div class="row row-height">
+									<div class="col-3">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['wrk01.label.pic']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-4">
+										<div class="control">
+											<h:inputText id="itPicName" styleClass="form-control" value="#{wrk012dto.event.picName}" autocomplete="off" p:placeholder="#{res['common.input.required']}"></h:inputText>
+											<h:inputHidden id="itPicId" value="#{wrk012dto.event.picId}"></h:inputHidden>
+											<h:commandButton id="cbChangePic" styleClass="hide" value="Change Pic" action="#{wrk012Bean.doAction('changePicAction')}">
+												<f:ajax execute="itPicName itPicId" render="itPicName itPicId"></f:ajax>
+											</h:commandButton>
+										</div>
+									</div>
+									<div class="col-2">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['wrk01.label.visibility']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="control">
+											<h:selectOneMenu id="sorPublicTo" styleClass="form-control" value="#{wrk012dto.event.visibility}" layout="pageDirection">
+												<f:selectItems value="#{wrk012dto.visibilityItems}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+								</div>
+
+								<div class="row row-height" style="min-height: 38px;">
+									<div class="col-3">
+										<div class="control text-right">
+											<h:selectBooleanCheckbox id="sbcSelectGuest" value="#{wrk012dto.selectGuest}" title="#{res['wrk01.label.selecguestall']}">
+												<f:ajax execute="@form" render="@form" listener="#{wrk012Bean.doAction('selectGuestAction')}"></f:ajax>
+											</h:selectBooleanCheckbox>
+											<h:outputText styleClass="form-label" value="#{res['wrk01.label.eventguest']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-9">
+										<div class="control">
+											<ul style="margin: 0px" id="itEventGuest" onkeypress="handleEnter(event, '#cbEventGuest')"></ul>
+										</div>
+									</div>
+								</div>
+
+								<div class="row row-height">
+									<div class="col-3">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['wrk01.label.remindedTime']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-2">
+										<div class="control">
+											<h:inputText id="itRemindTime" styleClass="form-control" value="#{wrk012dto.event.remindTime}" autocomplete="off"></h:inputText>
+										</div>
+									</div>
+									<div class="col-2">
+										<div class="control">
+											<h:selectOneMenu id="somRemindTimeUnit" styleClass="form-control" value="#{wrk012dto.event.remindTimeUnit}">
+												<f:selectItems value="#{wrk012dto.timeUnitItems}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+									<div class="col-2">
+										<div class="control">
+											<h:outputText styleClass="form-label" value="#{res['common.label.blank']}"></h:outputText>
+										</div>
+									</div>
+									<div class="col-3">
+										<div class="control">
+											<h:selectBooleanCheckbox value="#{wrk012dto.event.repeat}">
+												<f:ajax execute="@form" render="@form" listener="#{wrk012Bean.doAction('changeRepeatAction')}"></f:ajax>
+											</h:selectBooleanCheckbox>
+											<h:outputText styleClass="form-output" value="#{res['wrk01.label.repeat']}"></h:outputText>
+										</div>
+									</div>
+								</div>
+
+								<h:panelGroup styleClass="row" layout="block" rendered="#{wrk012dto.event.repeat}">
+									<div class="container12">
+										<div class="row row-height">
+											<div class="col-3">
+												<div class="control">
+													<h:outputText styleClass="form-label" value="#{res['wrk01.label.repeat']}"></h:outputText>
+												</div>
+											</div>
+											<div class="col-4">
+												<div class="control">
+													<h:selectOneMenu id="somRepeatType" styleClass="form-control" value="#{wrk012dto.event.repeatType}">
+														<f:selectItems value="#{wrk012dto.repeatTypeItems}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" />
+														<f:ajax execute="@form" render="@form" listener="#{wrk012Bean.doAction('changeRepeatTypeAction')}"></f:ajax>
+													</h:selectOneMenu>
+												</div>
+											</div>
+											<div class="col-2">
+												<div class="control">
+													<h:outputText styleClass="form-label" value="#{res['wrk01.label.repeatevery']}"></h:outputText>
+												</div>
+											</div>
+											<div class="col-1">
+												<div class="control">
+													<h:inputText id="itRepeatEvery" styleClass="form-control" value="#{wrk012dto.event.repeatEvery}" autocomplete="off"></h:inputText>
+												</div>
+											</div>
+											<div class="col-2">
+												<div class="control">
+													<h:outputText styleClass="form-output" value="#{wrk012dto.getTimeUnitName(wrk012dto.event.repeatType)}"></h:outputText>
+												</div>
+											</div>
+										</div>
+
+										<h:panelGroup styleClass="row row-height" layout="block" rendered="#{wrk012dto.event.repeatType eq 'w'}">
+											<div class="col-3">
+												<div class="control">
+													<h:outputText styleClass="form-label" value="#{res['wrk01.label.repeaton']}"></h:outputText>
+												</div>
+											</div>
+											<div class="col-1">
+												<div class="control">
+													<h:selectBooleanCheckbox value="#{wrk012dto.event.repeatMon}"></h:selectBooleanCheckbox>
+													<h:outputText styleClass="form-output" value="#{res['common.mo']}"></h:outputText>
+												</div>
+											</div>
+											<div class="col-1">
+												<div class="control">
+													<h:selectBooleanCheckbox value="#{wrk012dto.event.repeatTue}"></h:selectBooleanCheckbox>
+													<h:outputText styleClass="form-output" value="#{res['common.tu']}"></h:outputText>
+												</div>
+											</div>
+											<div class="col-1">
+												<div class="control">
+													<h:selectBooleanCheckbox value="#{wrk012dto.event.repeatWed}"></h:selectBooleanCheckbox>
+													<h:outputText styleClass="form-output" value="#{res['common.we']}"></h:outputText>
+												</div>
+											</div>
+											<div class="col-1">
+												<div class="control">
+													<h:selectBooleanCheckbox value="#{wrk012dto.event.repeatThu}"></h:selectBooleanCheckbox>
+													<h:outputText styleClass="form-output" value="#{res['common.th']}"></h:outputText>
+												</div>
+											</div>
+											<div class="col-1">
+												<div class="control">
+													<h:selectBooleanCheckbox value="#{wrk012dto.event.repeatFri}"></h:selectBooleanCheckbox>
+													<h:outputText styleClass="form-output" value="#{res['common.fr']}"></h:outputText>
+												</div>
+											</div>
+											<div class="col-1">
+												<div class="control">
+													<h:selectBooleanCheckbox value="#{wrk012dto.event.repeatSat}"></h:selectBooleanCheckbox>
+													<h:outputText styleClass="form-output" value="#{res['common.sa']}"></h:outputText>
+												</div>
+											</div>
+											<div class="col-1">
+												<div class="control">
+													<h:selectBooleanCheckbox value="#{wrk012dto.event.repeatSun}"></h:selectBooleanCheckbox>
+													<h:outputText styleClass="form-output" value="#{res['common.su']}"></h:outputText>
+												</div>
+											</div>
+										</h:panelGroup>
+
+										<h:panelGroup styleClass="row row-height" layout="block" rendered="#{wrk012dto.event.repeatType eq 'm'}">
+											<div class="col-3">
+												<div class="control">
+													<h:outputText styleClass="form-label" value="#{res['wrk01.label.repeatby']}"></h:outputText>
+												</div>
+											</div>
+											<div class="col-9">
+												<div class="control">
+													<h:selectOneRadio value="#{wrk012dto.event.repeatBy}" layout="lineDirection">
+														<f:selectItems value="#{wrk012dto.repeatByItems}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" />
+													</h:selectOneRadio>
+												</div>
+											</div>
+										</h:panelGroup>
+
+										<div class="row row-height">
+											<div class="col-3">
+												<div class="control">
+													<h:outputText styleClass="form-label" value="#{res['wrk01.label.starton']}"></h:outputText>
+												</div>
+											</div>
+
+											<div class="col-4">
+												<div class="control">
+													<h:outputText id="otStartOn" styleClass="form-control" value="#{wrk012dto.event.startDate}">
+														<f:convertDateTime pattern="#{uiconfig.patternDate}" timeZone="#{uiconfig.timeZone}" locale="#{uiconfig.locale}" />
+													</h:outputText>
+												</div>
+											</div>
+										</div>
+
+										<div class="row row-height">
+											<div class="col-3">
+												<div class="control">
+													<h:outputText styleClass="form-label" value="#{res['wrk01.label.ends']}"></h:outputText>
+												</div>
+											</div>
+											<div class="col">
+												<h:selectOneRadio value="#{wrk012dto.event.endRepeatType}" layout="pageDirection">
+													<f:selectItems value="#{wrk012dto.repeatEndItems}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" />
+													<f:ajax execute="@form" render="@form" listener="#{wrk012Bean.doAction('changeEndRepeatTypeAction')}"></f:ajax>
+												</h:selectOneRadio>
+											</div>
+
+											<div class="col-2">
+												<div class="container2">
+													<div class="row row-small">
+														<div class="col-2">
+															<div class="control">
+																<h:inputText id="itEndRepeat" styleClass="form-control" value="#{wrk012dto.event.endRepeat}" autocomplete="off" p:placeholder="#{uiconfig.patternDate}"
+																	disabled="#{wrk012dto.event.endRepeatType eq 2}">
+																	<f:convertDateTime pattern="#{uiconfig.patternDate}" timeZone="#{uiconfig.timeZone}" locale="#{uiconfig.locale}" />
+																</h:inputText>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-1">
+															<div class="control">
+																<h:inputText id="itOccurrences" styleClass="form-control" value="#{wrk012dto.event.occurrences}" autocomplete="off" disabled="#{wrk012dto.event.endRepeatType eq 1}">
+																</h:inputText>
+															</div>
+														</div>
+														<div class="col-1">
+															<h:outputText styleClass="form-output" value="#{res['wrk01.label.occurrences']}"></h:outputText>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</h:panelGroup>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Form content end -->
+
+		<script> 
+			$(function() {
+				
+				var pickerOptions = datePickerOptions();
+				
+				$('#itStartDate').datepicker(pickerOptions);
+				$('#itEndDate').datepicker(pickerOptions);
+				$('#itEndRepeat').datepicker(pickerOptions);
+				
+				$('#itStartTime').timepicker( {showAnim: 'blind'});
+				$('#itEndTime').timepicker( {showAnim: 'blind'} );
+
+				//Event Guest
+				var dataEventGuest = function(request, response) {
+					$.ajax({
+						url: "#{request.contextPath}/employee",
+						contentType: "application/json",
+						dataType: "json",
+						cache: false,
+						data: {
+							q: request.term
+						},
+						success: function (data) {
+						    response($.map(data, function (item) {
+						        return {
+						            label: item.desc,
+						            value: item.code + ': ' + item.label,
+						            id: item.code
+						        };
+						   	}));
+						}
+					});
+				};
+		
+				$('#itEventGuest').tagit({
+						tagSource: dataEventGuest, 
+						singleField: true,
+						placeholderText: 'Người tham gia',
+						singleFieldNode: $('#itEventGuestValue')
+				});	
+
+				$("#itEventWhere").autocomplete({
+					minLength: 1,
+					source: function(request, response) {
+						$.ajax({
+							url: "#{request.contextPath}/customer",
+							contentType: "application/json",
+							dataType: "json",
+							data: {
+								q: request.term
+							},
+							success: function(data) {
+								response(data);
+							}
+						});
+					},
+					focus: function(event, ui) {
+							return false;
+					},
+					select: function(event, ui) {
+						$("#itEventWhere").val(ui.item.label);
+						return false;
+					}
+				}).autocomplete("instance")._renderItem = function(ul, item) {
+					return $("<li/>")
+								.append("<a>" + item.desc + "</a>")
+								.appendTo(ul);
+				};
+
+				$("#itPicName").autocomplete({
+					minLength: 0,
+					cacheLength: 0,
+					source: function(request, response) {
+						$.ajax({
+							url: "#{request.contextPath}/employee",
+							contentType: "application/json",
+							dataType: "json",
+							cache: false,
+							data: {
+								q: request.term
+							},
+							success: function(data) {
+								response(data);
+							}
+						});
+					},
+					focus: function(event, ui) {
+							return false;
+					},
+					select: function(event, ui) {
+						$("#itPicName").val(ui.item.label);
+						$("#itPicId").val(ui.item.value);
+						$("#cbChangePic").click();
+						return false;
+					}
+				}).autocomplete("instance")._renderItem = function(ul, item) {
+					return $("<li/>")
+								.append("<a>" + item.desc + "</a>")
+								.appendTo(ul);
+				};
+
+				
+			});
+		</script>
+	</h:form>
+</h:body>
+	</html>
+</f:view>

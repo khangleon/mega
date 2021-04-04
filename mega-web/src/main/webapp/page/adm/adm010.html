@@ -1,0 +1,313 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	encoding="UTF-8" contentType="text/html;charset=UTF-8">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<h:head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"></meta>
+	<title>#{wrk010Bean.title}</title>
+	<link href="#{request.contextPath}/skins/image/icon.ico" rel="icon" />
+	<link href="#{request.contextPath}/skins/skin.css" rel="stylesheet" type="text/css" />
+	<link href="#{request.contextPath}/skins/jquery-ui.css" rel="stylesheet" type="text/css" />
+	<script src="#{request.contextPath}/js/jquery-2.1.1.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/tinymce/tinymce.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/jquery-ui.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/hashset.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/hashtable.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/jquery.numberformatter.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/jquery.ui.timepicker.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/common.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/data-table.js" type="text/javascript"></script>
+	<script src="#{request.contextPath}/js/splitter.js" type="text/javascript"></script>
+</h:head>
+<h:body>
+	<h:form id="mainForm" prependId="false">
+		<h:commandButton id="cbPreventEnterSubmit" onkeypress="return false;" onclick="return false;" style="width:0px; height:0px; border:none;" value="Prevent Enter" />
+		<ui:include src="/include/common.html" />
+		<ui:include src="/include/datepicker.html" />
+		<ui:include src="/include/message.html" />
+		<!-- Form action start -->
+		<div id="formaction" class="form-action">
+			<div class="container24">
+				<div class="row">
+					<div class="col-14">
+						<h:commandButton styleClass="btn btn-default btn-margin" value="#{res['common.button.delete']}" action="#{adm010Bean.doAction('deleteAction')}">
+						</h:commandButton>
+						<h:commandButton id="cbAddNew" styleClass="btn btn-primary btn-margin" value="#{res['common.button.addnew']}" action="#{adm010Bean.doAction('addNewAction')}">
+						</h:commandButton>
+					</div>
+					<div class="col-4">
+						<h:inputText id="itSearchQuick" styleClass="form-control no-radius-right" value="#{adm010dto.quickSearch}" autocomplete="off" tabindex="1"
+							onkeypress="handleEnter(event, 'cbSearchQuick');">
+						</h:inputText>
+					</div>
+					<div class="col-1">
+						<h:commandButton id="cbSearchQuick" styleClass="btn btn-default btn-search no-radius-left no-border-left" value="" title="#{res['common.button.search']}"
+							action="#{adm010Bean.doAction('searchQuickAction')}">
+							<f:ajax execute="@form" render="@form"></f:ajax>
+						</h:commandButton>
+					</div>
+					<div class="col-5">
+						<div class="container6">
+							<div class="row">
+								<div class="col pull-right table-paging">
+									<h:commandButton id="btPrev" styleClass="btn btn-default page-previous" value="&lt;" action="#{adm010Bean.doAction('prevPage')}"
+										disabled="#{adm010dto.tableData.pageIndex eq 1}" />
+									<h:commandButton id="btSelectPage" styleClass="btn btn-default page-index" value="#{adm010dto.tableData.pageIndex}" onclick="return false;"
+										disabled="#{adm010dto.tableData.pageCount eq 1}" />
+									<h:commandButton id="btNext" styleClass="btn btn-default page-next" value="&gt;" action="#{adm010Bean.doAction('nextPage')}"
+										disabled="#{adm010dto.tableData.pageIndex eq adm010dto.tableData.pageCount}" />
+								</div>
+								<div class="col pull-right">
+									<h:outputText styleClass="table-paging" value="#{adm010dto.tableData.rowBegin} - #{adm010dto.tableData.rowEnd} / #{adm010dto.tableData.rowCount}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Form action end -->
+		<div id="content" class="content">
+			<!-- Form search start -->
+			<div id="formsearch" class="form-search">
+				<div class="container24">
+					<div class="row row-small">
+						<div class="col-2">
+							<div class="control">
+								<h:outputText styleClass="form-label" value="#{res['adm01.label.account']}"></h:outputText>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="control">
+								<h:inputText id="itAccount" styleClass="form-control" value="#{adm010dto.account}" autocomplete="off" p:placeholder="#{res['common.label.all']}"></h:inputText>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="control">
+								<h:outputText styleClass="form-label" value="#{res['adm01.label.name']}"></h:outputText>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="control">
+								<h:inputText id="itName" styleClass="form-control" value="#{adm010dto.name}" autocomplete="off" p:placeholder="#{res['common.label.all']}"></h:inputText>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="control">
+								<h:outputText styleClass="form-label" value="#{res['adm01.label.status']}"></h:outputText>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="control">
+								<h:selectOneMenu id="somStatus" styleClass="form-control" value="#{adm010dto.status}">
+									<f:selectItems value="#{adm010dto.statusItems}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-2">
+							<div class="control">
+								<h:outputText styleClass="form-label" value="#{res['adm01.label.phone']}"></h:outputText>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="control">
+								<h:inputText id="itPhone" styleClass="form-control" value="#{adm010dto.phone}" autocomplete="off" p:placeholder="#{res['common.label.all']}"></h:inputText>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="control">
+								<h:outputText styleClass="form-label" value="#{res['adm01.label.email']}"></h:outputText>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="control">
+								<h:inputText id="itEmail" styleClass="form-control" value="#{adm010dto.email}" autocomplete="off" p:placeholder="#{res['common.label.all']}"></h:inputText>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="control">
+								<h:outputText styleClass="form-label" value="#{res['adm01.label.group']}"></h:outputText>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="control">
+								<h:selectOneMenu id="somGroup" styleClass="form-control" value="#{adm010dto.group}">
+									<f:selectItems value="#{adm010dto.groupItems}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+						<div class="col-2 text-right">
+							<h:commandButton id="btSearch" styleClass="btn btn-default btn-search-icon" value="#{res['common.button.search']}" action="#{adm010Bean.doAction('searchAdvanceAction')}">
+								<f:ajax execute="@form" render="@form"></f:ajax>
+							</h:commandButton>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Form search end -->
+			<div id="splitterSearch" style="top: 0px;" class="splitter horizontal" data-above="formsearch" data-under="formcontent" data-min="0" data-max="77" data-location="top"
+				data-direction="up" data-place="under" data-position="0" data-step="77" data-showhide="itSearchQuick cbSearchQuick" data-showshow="">
+				<h:inputHidden id="splitterSearchPosition" value="#{viewScope.splitterSearchPosition}" />
+			</div>
+			<!-- Form content start -->
+			<div id="formcontent" class="form-content" style="overflow-y: auto;">
+				<div class="table">
+					<h:dataTable id="tableUsers" styleClass="table" headerClass="table-header" rowClasses="table-row-odd,table-row-even" value="#{adm010dto.dataTable}" var="row" cellspacing="0"
+						cellpadding="0">
+						<h:column id="cSelected">
+							<f:facet name="header">
+								<div style="width: 25px;" class="col-header-blank">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 25px;" class="col-header row-header-left">
+									<h:selectBooleanCheckbox id="rowSelectedAll" styleClass="row-selected-all" value="#{adm010dto.tableData.allSelected}" />
+								</div>
+							</f:facet>
+							<div style="width: 25px;" class="row-header-left">
+								<h:selectBooleanCheckbox id="rowSelected" styleClass="row-selected" value="#{row.selected}" />
+							</div>
+						</h:column>
+
+						<h:column id="cNo">
+							<f:facet name="header">
+								<div style="width: 32px;" class="col-header-blank">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 32px;" class="col-header row-header-left last">
+									<h:outputText value="#{res['adm01.table.no']}" />
+								</div>
+							</f:facet>
+							<div style="width: 32px;" class="row-header-left last form-output text-right">
+								<h:outputText styleClass="form-lable" value="#{row.index}" />
+							</div>
+						</h:column>
+
+						<h:column id="cAccount">
+							<f:facet name="header">
+								<div style="width: 150px;">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 150px;" class="col-header">
+									<h:outputText value="#{res['adm01.table.account']}" />
+								</div>
+							</f:facet>
+							<div style="width: 150px;" class="form-output">
+								<h:commandLink id="clAccount" action="#{adm010Bean.doAction('viewAction')}" value="#{row.account}">
+									<f:setPropertyActionListener value="#{row.id}" target="#{adm010dto.idSelected}" />
+								</h:commandLink>
+							</div>
+						</h:column>
+
+						<h:column id="cName">
+							<f:facet name="header">
+								<div style="width: 200px;">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 200px;" class="col-header">
+									<h:outputText value="#{res['adm01.table.name']}" />
+								</div>
+							</f:facet>
+							<div style="width: 200px;" class="form-output">
+								<h:outputText value="#{row.name}" />
+							</div>
+						</h:column>
+
+						<h:column id="cAddress">
+							<f:facet name="header">
+								<div style="width: 300px;">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 300px;" class="col-header">
+									<h:outputText value="#{res['adm01.table.address']}" />
+								</div>
+							</f:facet>
+							<div style="width: 300px;" class="form-output">
+								<h:outputText value="#{row.address}" />
+							</div>
+						</h:column>
+
+						<h:column id="cPhone">
+							<f:facet name="header">
+								<div style="width: 120px;">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 120px;" class="col-header">
+									<h:outputText value="#{res['adm01.table.phone']}" />
+								</div>
+							</f:facet>
+							<div style="width: 120px;" class="form-output">
+								<h:outputText value="#{row.phone}" />
+							</div>
+						</h:column>
+
+						<h:column id="cEmail">
+							<f:facet name="header">
+								<div style="width: 200px;">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 200px;" class="col-header">
+									<h:outputText value="#{res['adm01.table.email']}" />
+								</div>
+							</f:facet>
+							<div style="width: 200px;" class="form-output">
+								<h:outputText value="#{row.email}" />
+							</div>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<div style="width: 80px;">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 80px;" class="col-header">
+									<h:outputText value="#{res['adm01.table.active']}" />
+								</div>
+							</f:facet>
+							<div style="width: 80px;">
+								<h:selectBooleanCheckbox value="#{row.active}" disabled="true" />
+							</div>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<div style="width: 80px;">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 80px;" class="col-header">
+									<h:outputText value="#{res['adm01.table.open']}" />
+								</div>
+							</f:facet>
+							<div style="width: 80px;">
+								<h:selectBooleanCheckbox value="#{row.open}" disabled="true" />
+							</div>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<div style="width: 50px;">
+									<h:outputText value="#{res['common.label.blank']}" />
+								</div>
+								<div style="width: 50px;" class="col-header">
+									<h:outputText value="#{res['adm01.table.reset']}" />
+								</div>
+							</f:facet>
+							<div style="width: 50px;">
+								<h:selectBooleanCheckbox value="#{row.changePassword}" disabled="true" />
+							</div>
+						</h:column>
+					</h:dataTable>
+				</div>
+			</div>
+			<!-- Form content end -->
+
+		</div>
+		<script type="text/javascript">
+			splitterInit();
+			initDataTable();
+		</script>
+	</h:form>
+</h:body>
+	</html>
+</f:view>
