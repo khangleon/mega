@@ -159,7 +159,7 @@ public class LoginBean extends BaseBean {
 			return null;
 		}
 
-		return redirectPage("page");
+		return redirectPage("index");
 	}
 
 	/**
