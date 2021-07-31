@@ -28,6 +28,10 @@ public class LoginBean extends BaseBean {
 	private static final String EM1003 = "EM1003";
 	private static final String EM1006 = "EM1006";
 	private static final String EM1007 = "EM1007";
+	
+	// Init start page after login, default index
+	// admin/2020
+	private static final String index = "page";
 
 	private LoginDto dto;
 
@@ -159,7 +163,7 @@ public class LoginBean extends BaseBean {
 			return null;
 		}
 
-		return redirectPage("index");
+		return redirectPage(index);
 	}
 
 	/**
